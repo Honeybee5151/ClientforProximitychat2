@@ -43,6 +43,7 @@ it flickers form disabled to enabled.
 6. When you package it in powershell, and play the game and exit the music continues to play. I cannot find it in task-
 manager, and need a computer-restart. Not sure if this happened for the other tester.
 7. If a player has a default mic as one which gives corrupted audio into the headphones, it will take a while to load
+the mic saved in settings.
 8. Switching mics if you use a mic that causes distorted headphone audio, is not switched immediately to better audio
 at mic switch.
 into the saved mic from settings.
