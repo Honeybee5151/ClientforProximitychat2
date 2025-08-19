@@ -159,27 +159,46 @@ public class PCVisualiser extends Sprite
         g.endFill();
     }
     private function onMicrophonesReceived(mics:Array):void {
+        if (!mics || mics.length == 0) {
+            trace("VoiceChatService: No microphones received.");
+            return;
+        }
 
         storedMicrophones = mics;
         trace("VoiceChatService: Microphones received:", storedMicrophones.length);
 
         // Determine initial mic from saved settings
         var initialMicId:String = null;
-        if (settings && settings.hasSavedMicrophone()) {
-            var savedMic:Object = settings.applySavedMicrophone(storedMicrophones);
-            if (savedMic) {
-                initialMicId = savedMic.Id;
-                trace("VoiceChatService: Initial mic to select:", savedMic.Name);
+        if (settings != null) {
+            if (settings.hasSavedMicrophone()) {
+                var savedMic:Object = settings.applySavedMicrophone(storedMicrophones);
+                if (savedMic != null && savedMic.Id != null) {
+                    initialMicId = savedMic.Id;
+                    trace("VoiceChatService: Initial mic to select:", savedMic.Name ? savedMic.Name : "Unknown");
+                } else {
+                    trace("VoiceChatService: Saved microphone not available.");
+                }
+            } else {
+                trace("VoiceChatService: No saved microphone found.");
             }
+        } else {
+            trace("VoiceChatService: Settings not initialized.");
         }
 
-        // Notify manager to update UI and handle selection
-        if (currentPCManager) {
+        // Notify manager safely
+        if (currentPCManager != null && typeof(currentPCManager.setAvailableMicrophones) == "function") {
             currentPCManager.setAvailableMicrophones(mics);
-            if (initialMicId) {
+            if (initialMicId != null && typeof(currentPCManager.updateMicrophoneSelection) == "function") {
                 currentPCManager.updateMicrophoneSelection(initialMicId);
             }
+        } else {
+            trace("VoiceChatService: PCManager not ready yet.");
+
+
+
         }
+
+
     }
     private function createBars():void
     {
