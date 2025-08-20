@@ -570,37 +570,48 @@ public class MapUserInput
             this.rotateRight_ = false;
             break;
               //777592
-         case Parameters.data_.PCUI:
-            if(stage.focus != null && stage.focus is TextField) {
-               var textField:TextField = stage.focus as TextField;
-               // Only block if it's an input field (has type INPUT)
-               if (textField.type == TextFieldType.INPUT) {
-                  return;
-               }
-            }
-            if(!PCUIChecker) {
-               gs_.initializePCUI();
-               PCUIChecker = true;
-            }
-            else {
-               if (gs_.proximityChatManager) {
-                  // Remove event listeners
+          case Parameters.data_.PCUI:
+              if(stage.focus != null && stage.focus is TextField) {
+                  var textField:TextField = stage.focus as TextField;
+                  // Only block if it's an input field (has type INPUT)
+                  if (textField.type == TextFieldType.INPUT) {
+                      return;
+                  }
+              }
+              if(!PCUIChecker) {
+                  gs_.initializePCUI();
+                  PCUIChecker = true; // Set this FIRST
 
-                  // Remove from display list
-                  if (gs_.proximityChatManager.parent) {
-                     gs_.removeChild(gs_.proximityChatManager);
+                  var voiceService:VoiceChatService = VoiceChatService.getInstance();
+                  if (voiceService && voiceService.audioBridge) {
+                      voiceService.audioBridge.setUIState(true); // Now reads PCUIChecker = true
+                  }
+              }
+              else {
+                  PCUIChecker = false; // Set this FIRST so setUIState reads false
+
+                  var voiceService:VoiceChatService = VoiceChatService.getInstance();
+                  if (voiceService && voiceService.audioBridge) {
+                      voiceService.audioBridge.setUIState(false); // Now reads PCUIChecker = false
                   }
 
-                  // Dispose of all internal components
-                  gs_.proximityChatManager.dispose();
+                  if (gs_.proximityChatManager) {
+                      // Remove event listeners
 
-                  // Set reference to null
-                  gs_.proximityChatManager = null;
-               }
-               PCUIChecker = false; // Reset the checker so it can be created again
-            }
-                 stage.focus = null;
-            break;
+                      // Remove from display list
+                      if (gs_.proximityChatManager.parent) {
+                          gs_.removeChild(gs_.proximityChatManager);
+                      }
+
+                      // Dispose of all internal components
+                      gs_.proximityChatManager.dispose();
+
+                      // Set reference to null
+                      gs_.proximityChatManager = null;
+                  }
+              }
+              stage.focus = null;
+              break;
               //777592
          case Parameters.data_.PCUIT:
 

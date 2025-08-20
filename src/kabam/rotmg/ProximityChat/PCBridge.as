@@ -1,4 +1,6 @@
 package kabam.rotmg.ProximityChat {
+import com.company.assembleegameclient.game.MapUserInput;
+
 import flash.desktop.NativeProcess;
 import flash.desktop.NativeProcessStartupInfo;
 import flash.events.EventDispatcher;
@@ -96,6 +98,13 @@ public class PCBridge extends EventDispatcher  {
         trace("Audio program exited with code:", e.exitCode);
     }
 
+    public function setUIState(isUIActive:Boolean):void {
+        if (MapUserInput.PCUIChecker) {
+            sendCommand("UI_ON");
+        } else {
+            sendCommand("UI_OFF");
+        }
+    }
     private function processAudioMessage(message:String):void {
         try {
            // trace("PCBridge: Raw message received:", message);
@@ -115,6 +124,7 @@ public class PCBridge extends EventDispatcher  {
                 //trace("PCBridge: Command:", command, "Value:", value);
 
                 switch (parts[0]) {
+
                     case "MIC_STATUS":
                         try {
                             trace("PCBridge: Entered MIC_STATUS case");
@@ -216,12 +226,12 @@ public class PCBridge extends EventDispatcher  {
     }
 
     public function sendCommand(command:String):void {
-        trace("PCBridge: Attempting to send command:", command); // Add this
+        //trace("PCBridge: Attempting to send command:", command); // Add this
 
         if (audioProcess && audioProcess.running) {
-            trace("PCBridge: Process is running, sending command"); // Add this
+           // trace("PCBridge: Process is running, sending command"); // Add this
             audioProcess.standardInput.writeUTFBytes(command + "\n");
-            trace("PCBridge: Command sent successfully"); // Add this
+            //trace("PCBridge: Command sent successfully"); // Add this
         } else {
             trace("PCBridge: ERROR - Process not running or null"); // Add this
             trace("PCBridge: audioProcess =", audioProcess);

@@ -457,14 +457,14 @@ public class PCManager extends Sprite
 
     public function updateVisualizerLevel(level:Number):void
     {
-        trace("PCManager: updateVisualizerLevel called with:", level); // ← Add this
+        //trace("PCManager: updateVisualizerLevel called with:", level); // ← Add this
 
         if (chatVisualizer)
         {
-            trace("PCManager: Visualizer exists, calling setAudioLevel"); // ← Add this
+            //trace("PCManager: Visualizer exists, calling setAudioLevel"); // ← Add this
             chatVisualizer.setAudioLevel(level);
         } else {
-            trace("PCManager: ERROR - chatVisualizer is null!"); // ← Add this
+           // trace("PCManager: ERROR - chatVisualizer is null!"); // ← Add this
         }
     }
 

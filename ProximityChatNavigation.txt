@@ -11,7 +11,8 @@ code from the server at login. It is generated at account generation, but a syst
 so you do not need to worry about that. After receiving the code, it is transferred from PCBridge (the link between the
 c# program and the client) to the c# program. It is then used as like a check between the server and and c# program. The
 system was accidentally tested when I removed the receiver in gameserverconnection and the VoiceHandler (the main
-receiver and sender in the server) did not receive the voice bytes. So spoofing is countered.
+receiver and sender in the server) did not receive the voice bytes. So spoofing is countered. Unless the code can be
+transcribed by another user when it is sent out.
 
 VoiceChatService is initalized in titleview. It basically activates the chsarp program. It is like the manager of
 PCBridge.
@@ -44,7 +45,8 @@ it flickers form disabled to enabled.
 manager, and need a computer-restart. Not sure if this happened for the other tester.
 7. If a player has a default mic as one which gives corrupted audio into the headphones, it will take a while to load
 the mic saved in settings.
-8. Switching mics if you use a mic that causes distorted headphone audio, is not switched immediately to better audio
+8. Switching mics if you use a mic combined with bluetooth headphones
+that causes distorted headphone audio, is not switched immediately to better audio
 at mic switch.
 into the saved mic from settings.
 (1-3 potentially fixed)
@@ -52,9 +54,11 @@ into the saved mic from settings.
 
 Easy change:
 
-If port 2051 is already in use go to this "var voiceListener = new TcpListener(IPAddress.Any, 2051);" on the server
+1. If port 2051 is already in use go to this "await udpVoiceHandler.StartUdpVoiceServer(2051);" on the server
 and change it to what you want.
 
 To do:
 
-Make it UDP perhaps. (DONE)
+1. Make it UDP perhaps. (DONE)
+
+2. Make the audio data for the visualiser not be sent when the UI is off.
