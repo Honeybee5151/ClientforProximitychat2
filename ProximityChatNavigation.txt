@@ -48,6 +48,7 @@ the mic saved in settings.
 at mic switch.
 into the saved mic from settings.
 (1-3 potentially fixed)
+(8 OBS has also so standard?)
 
 Easy change:
 
@@ -56,4 +57,4 @@ and change it to what you want.
 
 To do:
 
-Make it UDP perhaps.
+Make it UDP perhaps. (DONE)
