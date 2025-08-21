@@ -57,8 +57,11 @@ Easy change:
 1. If port 2051 is already in use go to this "await udpVoiceHandler.StartUdpVoiceServer(2051);" on the server
 and change it to what you want.
 
-To do:
+To do/progress since last release.
 
-1. Make it UDP perhaps. (DONE)
+1. Make it UDP, perhaps. (DONE)
 
 2. Make the audio data for the visualiser not be sent when the UI is off. (DONE)
+
+3. Make when the sound of non-priority is on off, disable it coming into the client for reduced lag. (DONE)
+
